@@ -134,6 +134,7 @@ import L2 from '@/assets/L2.jpeg'
 import L3 from '@/assets/L3.jpeg'
 import L4 from '@/assets/L4.jpeg'
 import router from '@/router';
+import request from '@/utils/request.js';
 
 const data = reactive({
   input: null,
@@ -156,7 +157,13 @@ const data = reactive({
     { id:5,date:'2020-12-11',name:'李宇春',address:'成都'},
   ],
   dialogVisible:false,
-  row:null
+  row:null,
+  employeeList:[]
+})
+
+request.get('/employee/selectAll').then(res => {
+   console.log(res)
+   data.employeeList = res.data
 })
 
 const del = (id)=>{
