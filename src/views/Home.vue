@@ -1,9 +1,9 @@
 <template>
   <div>
-    
+
     <div style="margin-bottom: 100px">
-       <router-link to="/test">通过router-link跳转到测试页面</router-link>         
-       <a href="/test">通过a标签跳转到测试页面</a>
+      <router-link to="/test">通过router-link跳转到测试页面</router-link>
+      <a href="/test">通过a标签跳转到测试页面</a>
     </div>
 
     <div style="margin-bottom: 40px">
@@ -41,86 +41,93 @@
     </div>
 
     <div style="margin: 20px 0">
-        <el-checkbox v-for="item in data.options" :key="item" :label="item" :value="item">
-          {{ item }}
-        </el-checkbox>
+      <el-checkbox v-for="item in data.options" :key="item" :label="item" :value="item">
+        {{ item }}
+      </el-checkbox>
     </div>
 
-    <div style="margin: 20px 0"> 
-      <el-image :src="img" style="width: 100px;margin-left: 100px"  :preview-src-list="[img,'https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg']"/>
+    <div style="margin: 20px 0">
+      <el-image :src="img" style="width: 100px;margin-left: 100px"
+        :preview-src-list="[img, 'https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg']" />
     </div>
 
     <div style="margin: 20px 0">
       <el-carousel height="400px" style="width: 550px">
-         <el-carousel-item v-for="item in data.imgs" :key="item">
-           <img style="width: 100%" :src="item" alt="">
-         </el-carousel-item>
+        <el-carousel-item v-for="item in data.imgs" :key="item">
+          <img style="width: 100%" :src="item" alt="">
+        </el-carousel-item>
       </el-carousel>
     </div>
 
     <div style="margin: 20px 0">
-      <el-date-picker
-        v-model="data.date"
-        type="date"
-        placeholder="请选择日期"
-        format="YYYY/MM/DD"
-        value-format="YYYY/MM/DD"
-      /> {{ data.date }}
+      <el-date-picker v-model="data.date" type="date" placeholder="请选择日期" format="YYYY/MM/DD"
+        value-format="YYYY/MM/DD" /> {{ data.date }}
 
-      <el-date-picker style="margin-left: 50px "
-        v-model="data.date1"
-        type="datetime"
-        placeholder="请选择日期时间"
-        format="YYYY/MM/DD HH:mm:ss"
-        value-format="YYYY/MM/DD HH:mm:ss"
-      />{{ data.date1 }}
+      <el-date-picker style="margin-left: 50px " v-model="data.date1" type="datetime" placeholder="请选择日期时间"
+        format="YYYY/MM/DD HH:mm:ss" value-format="YYYY/MM/DD HH:mm:ss" />{{ data.date1 }}
 
-      <el-date-picker style="margin-left: 50px "
-        v-model="data.time"
-        type="datetime"
-        placeholder="请选择时间"
-        format="HH:mm:ss"
-        value-format="HH:mm:ss"
-      />{{ data.time }}
+      <el-date-picker style="margin-left: 50px " v-model="data.time" type="datetime" placeholder="请选择时间"
+        format="HH:mm:ss" value-format="HH:mm:ss" />{{ data.time }}
 
-      <el-date-picker style="margin-left: 50px"
-        v-model="data.daterange"
-        type="daterange"
-        range-separator="到"
-        start-placeholder="开始日期"
-        end-placeholder="结束日期"
-      />
+      <el-date-picker style="margin-left: 50px" v-model="data.daterange" type="daterange" range-separator="到"
+        start-placeholder="开始日期" end-placeholder="结束日期" />
     </div>
 
-    <div style="margin: 20px 0"> 
+    <div style="margin: 20px 0">
       <el-table :data="data.tableData" style="width: 100%">
         <el-table-column prop="date" label="日期" width="180" />
         <el-table-column prop="name" label="姓名" width="180" />
         <el-table-column prop="address" label="地址" />
+        <el-table-column prop="content" label="内容">
+          <template #default="scope">
+            <div v-html="scope.row.content">
+
+            </div>
+          </template>
+        </el-table-column>
         <el-table-column label="操作栏">
           <template #default="scope">
+            <el-button type="primary" @click="editContent(scope.row)">编辑富文本</el-button>
             <el-button type="primary" @click="edit(scope.row)">编辑</el-button>
             <el-button type="danger" @click="del(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
       <div style="padding: 10px 0">
-        <el-pagination
-          v-model:current-page="data.currentPage"
-          v-model:page-size="data.pageSize"
-          :page-sizes="[5, 10, 15, 20]"
-          background
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="data.tableData.length"
-    />
+        <el-pagination v-model:current-page="data.currentPage" v-model:page-size="data.pageSize"
+          :page-sizes="[5, 10, 15, 20]" background layout="total, sizes, prev, pager, next, jumper"
+          :total="data.tableData.length" />
       </div>
     </div>
     <el-dialog v-model="data.dialogVisible" title="编辑行对象" width="500">
       <div style="padding: 20px">
-         <div style="margin-bottom: 10px">日期：{{ data.row.date }}</div>
-         <div style="margin-bottom: 10px">名称：{{ data.row.name }}</div>
-         <div>地址：{{ data.row.address }}</div>
+        <div style="margin-bottom: 10px">日期：{{ data.row.date }}</div>
+        <div style="margin-bottom: 10px">名称：{{ data.row.name }}</div>
+        <div>地址：{{ data.row.address }}</div>
       </div>
+    </el-dialog>
+
+    <el-dialog v-model="data.formContentVisible" title="编辑内容" width="800">
+      <div style="padding: 20px">
+        <div style="border: 1px solid #ccc; width: 100%">
+          <Toolbar 
+             style="border-bottom: 1px solid #ccc" 
+             :editor="editorRef" 
+             :mode="mode" />
+          <Editor 
+            style="height: 500px; overflow-y: hidden;" 
+            v-model="data.form.content" 
+            :mode="mode"
+            :defaultConfig="editorConfig" 
+            @onCreated="handleCreated" />
+        </div>
+      </div>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="data.formVisible = false">取消</el-button>
+          <el-button type="primary" @click="saveContent">保存</el-button>
+        </div>
+      </template>
     </el-dialog>
   </div>
 </template>
@@ -135,6 +142,10 @@ import L3 from '@/assets/L3.jpeg'
 import L4 from '@/assets/L4.jpeg'
 import router from '@/router';
 import request from '@/utils/request.js';
+import Color from 'element-plus/es/components/color-picker/src/utils/color';
+import '@wangeditor/editor/dist/css/style.css' // 引入 css
+import { onBeforeUnmount, ref, shallowRef } from "vue";
+import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 
 const data = reactive({
   input: null,
@@ -143,35 +154,65 @@ const data = reactive({
   options: ['苹果', '香蕉', '梨'],
   sex: '男',
   tag: '收藏',
-  imgs:[L1,L2,L3,L4],
-  date:'',
-  date1:'',
-  daterange:null,
-  currentPage:2,
-  pageSize:5,
-  tableData:[
-    { id:1,date:'2024-12-11',name:'汪苏泷',address:'北京'},
-    { id:2,date:'2020-12-11',name:'李宇春',address:'成都'},
-    { id:3,date:'1995-12-11',name:'魏大勋',address:'沈阳'},
-    { id:4,date:'2024-12-11',name:'汪苏泷',address:'北京'},
-    { id:5,date:'2020-12-11',name:'李宇春',address:'成都'},
+  imgs: [L1, L2, L3, L4],
+  date: '',
+  date1: '',
+  daterange: null,
+  currentPage: 2,
+  pageSize: 5,
+  tableData: [
+    { id: 1, date: '2024-12-11', name: '汪苏泷', address: '北京', content: '<h1>哈哈哈</h1>' },
+    { id: 2, date: '2020-12-11', name: '李宇春', address: '成都', content: '<h1 style="color:red">呼呼呼</h1>' },
+    { id: 3, date: '1995-12-11', name: '魏大勋', address: '沈阳', content: '<h1>嘻嘻嘻</h1>' },
+    { id: 4, date: '2024-12-11', name: '汪苏泷', address: '北京', content: '<h1 style="font-size:12px">呵呵呵</h1>' },
+    { id: 5, date: '2020-12-11', name: '李宇春', address: '成都', content: '<h1>啦啦啦</h1>' },
   ],
-  dialogVisible:false,
-  row:null,
-  employeeList:[]
+  dialogVisible: false,
+  row: null,
+  employeeList: [],
+  formContentVisible: false,
+  form:{}
 })
 
-request.get('/employee/selectAll').then(res => {
-   console.log(res)
-   data.employeeList = res.data
-})
-
-const del = (id)=>{
-  alert("删除ID="+id+"的数据")
+const editContent = (row) => {
+ data.form = row
+ data.formContentVisible = true
 }
 
-const edit = (row)=>{
-  data.row=row
-  data.dialogVisible=true
+const saveContent = () => {
+  data.formContentVisible = false
+}
+
+
+/* wangEditor5 初始化开始 */
+const editorRef = shallowRef() // 编辑器实例，必须用 shallowRef
+const mode = 'default'
+const editorConfig = { MENU_CONF: {} }
+// 组件销毁时，也及时销毁编辑器，否则可能会造成内存泄漏
+onBeforeUnmount(() => {
+    const editor = editorRef.value
+    if (editor == null) return
+    editor.destroy()
+})
+
+// 记录 editor 实例，重要！
+const handleCreated = (editor) => {
+    editorRef.value = editor
+}
+
+/* wangEditor5 初始化结束 */
+
+request.get('/employee/selectAll').then(res => {
+  console.log(res)
+  data.employeeList = res.data
+})
+
+const del = (id) => {
+  alert("删除ID=" + id + "的数据")
+}
+
+const edit = (row) => {
+  data.row = row
+  data.dialogVisible = true
 }
 </script>

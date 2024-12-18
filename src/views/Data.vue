@@ -1,59 +1,136 @@
 <template>
     <div>
-        <div class="card" style="margin-bottom: 5px">
-            <el-input style="width: 240px;margin-right: 10px" v-model="data.name" placeholder="请输入名称查询" prefix-icon="Search"></el-input>
-            <el-button type="primary">查询</el-button>           
-            <el-button type="warning">重置</el-button>           
+        <div style="display: flex;grid-gap: 10px;margin-bottom: 10px">
+            <div class="card" style="padding: 20px; flex: 1;height: 400px" id="bar"></div>
+            <div class="card" style="padding: 20px;flex: 1;height: 400px" id="line"></div>
         </div>
-        <div class="card" style="margin-bottom: 5px">
-            <el-button type="primary">新增</el-button>           
-            <el-button type="warning">批量删除</el-button>     
-            <el-button type="info">导入</el-button>     
-            <el-button type="success">导出</el-button>     
-        </div>
-        <div class="card" style="margin-bottom: 5px">
-            <el-table :data="data.tableData" stripe>
-                <el-table-column label="日期" prop="date"/>
-                <el-table-column label="名称" prop="name"/>
-                <el-table-column label="地址" prop="address"/>
-            </el-table>
-            <div style="margin-top: 15px">
-              <el-pagination
-                  v-model:current-page="data.pageNum"
-                  v-model:page-size="data.pageSize"
-                  :page-sizes="[5, 10, 15, 20]"
-                  background
-                  layout="total, sizes, prev, pager, next, jumper"
-                  :total="data.total"
-              />
-            </div>
+
+        <div style="display: flex;grid-gap: 10px">
+            <div class="card" style="padding: 20px; width: calc(50% - 40px); height: 400px" id="pie"></div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { reactive } from 'vue';
-import { Search } from '@element-plus/icons-vue';
-const data = reactive({
-    name:null,
-    tableData:[
-    { id:1,date:'2024-12-11',name:'樱桃小丸子',address:'大阪'},
-    { id:2,date:'2020-11-23',name:'哆啦A梦',address:'东京'},
-    { id:3,date:'1995-05-02',name:'海贼王',address:'北海道'},
-    ],
-    pageNum:1,
-    pageSize:10,
-    total:47
+import { reactive, onMounted } from 'vue';
+import * as echarts from 'echarts';
+import request from '@/utils/request';
 
-    
+const barOption = {
+    title: {
+        text: '各部门员工数量'
+    },
+    tooltip: {},
+    legend: {
+        data: ['人数']
+    },
+    xAxis: {
+        data: []
+    },
+    yAxis: {},
+    series: [
+        {
+            name: '人数',
+            type: 'bar',
+            data: [],
+            itemStyle: {
+                normal: {
+                    color: function (params) {
+                        let colors = ['#5470c6', '#91cc75', '#fac858', '#ee6666']
+                        return colors[params.dataIndex % colors.length]
+                    }
+                },
+            },
+        }
+    ]
+};
+
+const lineOption = {
+    title: {
+        text: '近7日发布文章的数量'
+    },
+    tooltip: {},
+    legend: {
+        trigger: 'item'
+    },
+    xAxis: {
+        data: []
+    },
+    yAxis: {},
+    series: [
+        {
+            name: '发布数量',
+            type: 'line',
+            data: [],
+            smooth: true
+        }
+    ]
+};
+
+const pieOption = {
+    title: {
+        text: '各部门员工数量比例图',
+        left: 'center'
+    },
+    tooltip: {
+        trigger: 'item'
+    },
+    legend: {
+        orient: 'vertical',
+        x: 'left'
+    },
+    series: [
+        {
+            name: '员工数量',
+            type: 'pie',
+            radius: '50%',
+            data: [],
+            label: {
+                formatter: '{b}: {@2012} ({d}%)'
+            },
+            emphasis: {
+                itemStyle: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+        }
+    ]
+}
+
+
+
+// onMounted:表示页面所有的dom元素都初始化完成了
+onMounted(() => {
+
+    // 基于准备好的dom，初始化echarts实例
+    const barChart = echarts.init(document.getElementById('bar'));
+    request.get('/barData').then(res => {
+        barOption.xAxis.data = res.data.dept // 横轴数据
+        barOption.series[0].data = res.data.count // 纵轴数据
+        // 使用刚指定的配置项和数据显示图表。
+        barChart.setOption(barOption);
+    })
+
+    // 基于准备好的dom，初始化echarts实例
+    const lineChart = echarts.init(document.getElementById('line'));
+    request.get('/lineData').then(res => {
+        lineOption.xAxis.data = res.data.date // 横轴数据
+        lineOption.series[0].data = res.data.count // 纵轴数据
+        // lineChart
+        lineChart.setOption(lineOption);
+    })
+
+    // 基于准备好的dom，初始化echarts实例
+    const pieChart = echarts.init(document.getElementById('pie'));
+    request.get('/pieData').then(res => {
+        pieOption.series[0].data = res.data
+        // lineChart
+        pieChart.setOption(pieOption);
+    })
 })
+
 </script>
 
-<style scoped>
-.card{
-    background-color:white;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow:0 0 8px rgba(0,0,0,12) ;
-}
-</style>
+<style scoped></style>
