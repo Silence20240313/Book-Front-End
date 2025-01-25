@@ -1,218 +1,133 @@
 <template>
-  <div>
-
-    <div style="margin-bottom: 100px">
-      <router-link to="/test">通过router-link跳转到测试页面</router-link>
-      <a href="/test">通过a标签跳转到测试页面</a>
+  <div class="container">
+    <div class="card">
+      <h1>后台管理系统</h1>
+      <p>这是一个功能丰富的后台管理系统，旨在帮助企业管理员高效管理用户、员工和部门信息。系统具备以下主要功能：</p>
     </div>
 
-    <div style="margin-bottom: 40px">
-      <el-button type="primary" @click="router.push('/test')">通过push跳转到新页面</el-button>
-      <el-button type="primary" @click="router.replace('/test')">通过replace跳转到新页面</el-button>
+    <div class="card">
+      <h2>主要功能</h2>
+      <ul>
+        <li><span class="feature-icon">👤</span><strong>用户管理：</strong> 支持用户的注册、登录、权限管理（普通员工和管理员）。</li>
+        <li><span class="feature-icon">🔑</span><strong>密码管理：</strong> 用户可修改密码，管理员可管理所有用户的账户信息。</li>
+        <li><span class="feature-icon">📝</span><strong>文章管理：</strong> 提供文章的增、删、改、查功能，方便管理员对内容进行管理。</li>
+        <li><span class="feature-icon">👥</span><strong>员工与部门管理：</strong> 支持员工信息的管理，并可增、删、改、查部门信息。</li>
+        <li><span class="feature-icon">📊</span><strong>数据管理：</strong> 包含图表功能，实时展示近7天内发布的文章数量和各部门员工人数，帮助管理员快速了解系统运营情况。</li>
+      </ul>
     </div>
 
-    <div style="margin-bottom: 40px">
-      <el-button type="primary" @click="router.push('/test?id=1')">路由传参id=1</el-button>
+    <div class="card">
+      <h2>系统特点</h2>
+      <ul>
+        <li><strong>易操作：</strong> 简单的操作界面，轻松上手。</li>
+        <li><strong>数据可视化：</strong> 内置图表，实时展示数据，便于决策分析。</li>
+        <li><strong>安全性高：</strong> 严格的用户权限控制，保障数据安全。</li>
+      </ul>
     </div>
 
-    <div style="margin-bottom: 20px">
-      <el-input v-model="data.input" style="width: 240px" placeholder="请输入" :prefix-icon="Search" />{{ data.input }}
-      <el-input style="width: 200px" :suffix-icon="Calendar"></el-input>
-      <el-input type="textarea" v-model="data.descr" style="width: 300px" placeholder="请输入一段描述"></el-input>
+    <div class="card">
+      <p>本系统注重操作简便与数据可视化，致力于为企业提供更高效的管理体验。</p>
     </div>
-
-    <div style="margin: 20px 0">
-      <el-select clearable multiple v-model="data.value" placeholder="请选择水果的种类" size="large" style="width: 240px">
-        <el-option v-for="item in data.options" :key="item" :label="item" :value="item" />
-      </el-select>
-    </div>
-
-    <div style="margin: 20px 0">
-      <el-radio-group v-model="data.sex">
-        <el-radio value="男">男</el-radio>
-        <el-radio value="女">女</el-radio>
-      </el-radio-group>
-
-      <el-radio-group style="margin-left: 100px" v-model="data.tag" size="large">
-        <el-radio-button label="发布" value="发布" />
-        <el-radio-button label="点赞" value="点赞" />
-        <el-radio-button label="收藏" value="收藏" />
-      </el-radio-group>
-    </div>
-
-    <div style="margin: 20px 0">
-      <el-checkbox v-for="item in data.options" :key="item" :label="item" :value="item">
-        {{ item }}
-      </el-checkbox>
-    </div>
-
-    <div style="margin: 20px 0">
-      <el-image :src="img" style="width: 100px;margin-left: 100px"
-        :preview-src-list="[img, 'https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg']" />
-    </div>
-
-    <div style="margin: 20px 0">
-      <el-carousel height="400px" style="width: 550px">
-        <el-carousel-item v-for="item in data.imgs" :key="item">
-          <img style="width: 100%" :src="item" alt="">
-        </el-carousel-item>
-      </el-carousel>
-    </div>
-
-    <div style="margin: 20px 0">
-      <el-date-picker v-model="data.date" type="date" placeholder="请选择日期" format="YYYY/MM/DD"
-        value-format="YYYY/MM/DD" /> {{ data.date }}
-
-      <el-date-picker style="margin-left: 50px " v-model="data.date1" type="datetime" placeholder="请选择日期时间"
-        format="YYYY/MM/DD HH:mm:ss" value-format="YYYY/MM/DD HH:mm:ss" />{{ data.date1 }}
-
-      <el-date-picker style="margin-left: 50px " v-model="data.time" type="datetime" placeholder="请选择时间"
-        format="HH:mm:ss" value-format="HH:mm:ss" />{{ data.time }}
-
-      <el-date-picker style="margin-left: 50px" v-model="data.daterange" type="daterange" range-separator="到"
-        start-placeholder="开始日期" end-placeholder="结束日期" />
-    </div>
-
-    <div style="margin: 20px 0">
-      <el-table :data="data.tableData" style="width: 100%">
-        <el-table-column prop="date" label="日期" width="180" />
-        <el-table-column prop="name" label="姓名" width="180" />
-        <el-table-column prop="address" label="地址" />
-        <el-table-column prop="content" label="内容">
-          <template #default="scope">
-            <div v-html="scope.row.content">
-
-            </div>
-          </template>
-        </el-table-column>
-        <el-table-column label="操作栏">
-          <template #default="scope">
-            <el-button type="primary" @click="editContent(scope.row)">编辑富文本</el-button>
-            <el-button type="primary" @click="edit(scope.row)">编辑</el-button>
-            <el-button type="danger" @click="del(scope.row.id)">删除</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
-      <div style="padding: 10px 0">
-        <el-pagination v-model:current-page="data.currentPage" v-model:page-size="data.pageSize"
-          :page-sizes="[5, 10, 15, 20]" background layout="total, sizes, prev, pager, next, jumper"
-          :total="data.tableData.length" />
-      </div>
-    </div>
-    <el-dialog v-model="data.dialogVisible" title="编辑行对象" width="500">
-      <div style="padding: 20px">
-        <div style="margin-bottom: 10px">日期：{{ data.row.date }}</div>
-        <div style="margin-bottom: 10px">名称：{{ data.row.name }}</div>
-        <div>地址：{{ data.row.address }}</div>
-      </div>
-    </el-dialog>
-
-    <el-dialog v-model="data.formContentVisible" title="编辑内容" width="800">
-      <div style="padding: 20px">
-        <div style="border: 1px solid #ccc; width: 100%">
-          <Toolbar 
-             style="border-bottom: 1px solid #ccc" 
-             :editor="editorRef" 
-             :mode="mode" />
-          <Editor 
-            style="height: 500px; overflow-y: hidden;" 
-            v-model="data.form.content" 
-            :mode="mode"
-            :defaultConfig="editorConfig" 
-            @onCreated="handleCreated" />
-        </div>
-      </div>
-      <template #footer>
-        <div class="dialog-footer">
-          <el-button @click="data.formVisible = false">取消</el-button>
-          <el-button type="primary" @click="saveContent">保存</el-button>
-        </div>
-      </template>
-    </el-dialog>
   </div>
 </template>
 
-<script setup>
-import { reactive } from 'vue';
-import { Search, Calendar } from '@element-plus/icons-vue'
-import img from '@/assets/logo.svg'
-import L1 from '@/assets/L1.jpeg'
-import L2 from '@/assets/L2.jpeg'
-import L3 from '@/assets/L3.jpeg'
-import L4 from '@/assets/L4.jpeg'
-import router from '@/router';
-import request from '@/utils/request.js';
-import Color from 'element-plus/es/components/color-picker/src/utils/color';
-import '@wangeditor/editor/dist/css/style.css' // 引入 css
-import { onBeforeUnmount, ref, shallowRef } from "vue";
-import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
-
-const data = reactive({
-  input: null,
-  descr: ' #汪苏泷十万伏特音乐计划# 每一次见面时埋下的伏笔，都成为了《十万伏特》的能量来源，充电进行时，能量百分百。@汪苏泷 2024原创专辑《十万伏特》同名先导充电曲已上线。今日暂停思考，一起摇摆。',
-  value: '',
-  options: ['苹果', '香蕉', '梨'],
-  sex: '男',
-  tag: '收藏',
-  imgs: [L1, L2, L3, L4],
-  date: '',
-  date1: '',
-  daterange: null,
-  currentPage: 2,
-  pageSize: 5,
-  tableData: [
-    { id: 1, date: '2024-12-11', name: '汪苏泷', address: '北京', content: '<h1>哈哈哈</h1>' },
-    { id: 2, date: '2020-12-11', name: '李宇春', address: '成都', content: '<h1 style="color:red">呼呼呼</h1>' },
-    { id: 3, date: '1995-12-11', name: '魏大勋', address: '沈阳', content: '<h1>嘻嘻嘻</h1>' },
-    { id: 4, date: '2024-12-11', name: '汪苏泷', address: '北京', content: '<h1 style="font-size:12px">呵呵呵</h1>' },
-    { id: 5, date: '2020-12-11', name: '李宇春', address: '成都', content: '<h1>啦啦啦</h1>' },
-  ],
-  dialogVisible: false,
-  row: null,
-  employeeList: [],
-  formContentVisible: false,
-  form:{}
-})
-
-const editContent = (row) => {
- data.form = row
- data.formContentVisible = true
-}
-
-const saveContent = () => {
-  data.formContentVisible = false
-}
-
-
-/* wangEditor5 初始化开始 */
-const editorRef = shallowRef() // 编辑器实例，必须用 shallowRef
-const mode = 'default'
-const editorConfig = { MENU_CONF: {} }
-// 组件销毁时，也及时销毁编辑器，否则可能会造成内存泄漏
-onBeforeUnmount(() => {
-    const editor = editorRef.value
-    if (editor == null) return
-    editor.destroy()
-})
-
-// 记录 editor 实例，重要！
-const handleCreated = (editor) => {
-    editorRef.value = editor
-}
-
-/* wangEditor5 初始化结束 */
-
-request.get('/employee/selectAll').then(res => {
-  console.log(res)
-  data.employeeList = res.data
-})
-
-const del = (id) => {
-  alert("删除ID=" + id + "的数据")
-}
-
-const edit = (row) => {
-  data.row = row
-  data.dialogVisible = true
+<script>
+export default {
+  name: 'Home'
 }
 </script>
+
+<style scoped>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #4e79a7, #1d3c6e); /* 渐变蓝色背景 */
+  color: #fff;
+  padding: 40px 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  margin-bottom: 30px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: rgba(255, 255, 255, 0.9); /* 透明卡片背景 */
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.15);
+}
+
+h1 {
+  color: #007bff;
+  text-align: center;
+  font-size: 3em;
+  margin-bottom: 20px;
+}
+
+h2 {
+  color: #28a745;
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+li {
+  font-size: 1.1em;
+  margin-bottom: 15px;
+  line-height: 1.8;
+}
+
+.feature-icon {
+  color: #007bff;
+  margin-right: 10px;
+}
+
+ul li strong {
+  color: #333;
+}
+
+.note {
+  background-color: #fff3cd;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #ffeeba;
+  margin-bottom: 20px;
+}
+
+.card p {
+  font-size: 1.2em;
+  color: #333;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.5em;
+  }
+  h2 {
+    font-size: 1.7em;
+  }
+  .container {
+    padding: 10px;
+  }
+}
+</style>

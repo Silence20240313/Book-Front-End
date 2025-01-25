@@ -77,7 +77,7 @@ const login = () => {
 .login-container {
   height: 100vh;
   overflow: hidden;
-  background-image: url("@/assets/bj.gif");
+  background-image: url("@/assets/bj.jpg");
   background-size: cover;
   background-position: 0 -50px
 }
