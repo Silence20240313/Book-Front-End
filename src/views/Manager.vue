@@ -2,9 +2,9 @@
   <div>
     <!-- 头部区域 -->
     <div style="height: 60px;background-color: #3c7fff;display: flex;align-items: center">
-      <div style="width:200px;display: flex;align-items: center;padding-left: 15px">
+      <div style="width:400px;display: flex;align-items: center;padding-left: 15px">
         <img style="width: 40px" src="@/assets/logo111.png" alt="">
-        <span style="font-size:24px;color: white;margin-left: 5px">后台管理系统</span>
+        <span style="font-size:24px;color: white;margin-left: 5px">社員管理システム</span>
       </div>
       <div style="flex: 1"></div>
 
@@ -30,27 +30,27 @@
             <el-icon>
               <House />
             </el-icon>
-            系统首页
+            システムホーム
           </el-menu-item>
           <el-menu-item index="/manager/data">
             <el-icon>
               <DataAnalysis />
             </el-icon>
-            数据统计
+            データ統計
           </el-menu-item>
 
           <el-menu-item index="/manager/article" v-if="data.user.role === 'ADMIN'">
             <el-icon>
               <OfficeBuilding />
             </el-icon>
-            文章管理
+            通知管理
           </el-menu-item>
 
           <el-menu-item index="/manager/dept" v-if="data.user.role === 'ADMIN'">
             <el-icon>
               <Document />
             </el-icon>
-            部门管理
+            部門管理
           </el-menu-item>
 
           <el-sub-menu index="1" v-if="data.user.role === 'ADMIN'">
@@ -58,28 +58,28 @@
               <el-icon>
                 <User />
               </el-icon>
-              <span>用户管理</span>
+              <span>ユーザー管理</span>
             </template>
-            <el-menu-item index="/manager/admin">管理员信息</el-menu-item>
-            <el-menu-item index="/manager/employee">员工信息</el-menu-item>
+            <el-menu-item index="/manager/admin">管理者情報</el-menu-item>
+            <el-menu-item index="/manager/employee">従業員情報</el-menu-item>
           </el-sub-menu>
           <el-menu-item index="/manager/person">
             <el-icon>
               <UserFilled />
             </el-icon>
-            个人信息
+            個人情報
           </el-menu-item>
           <el-menu-item index="/manager/password">
             <el-icon>
               <Lock />
             </el-icon>
-            修改密码
+            パスワード変更
           </el-menu-item>
           <el-menu-item @click="logout">
             <el-icon>
               <SwitchButton />
             </el-icon>
-            退出登录
+            ログアウト
           </el-menu-item>
 
         </el-menu>

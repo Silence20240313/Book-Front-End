@@ -1,18 +1,18 @@
 <template>
     <div class="card" style="width: 50%;padding: 40px 20px">
-        <el-form ref="formRef" :rules="data.rules" :model="data.form" label-width="100px"
+        <el-form ref="formRef" :rules="data.rules" :model="data.form" label-width="200px"
             style="padding-right: 40px;padding-top: 20px">
-            <el-form-item label="原密码" prop="password">
-                <el-input show-password v-model="data.form.password" autocomplete="off" placeholder="请输入原密码" />
+            <el-form-item label="旧パスワード" prop="password">
+                <el-input show-password v-model="data.form.password" autocomplete="off" placeholder="旧パスワードを入力してください" />
             </el-form-item>
-            <el-form-item label="新密码" prop="newPassword">
-                <el-input show-password v-model="data.form.newPassword" autocomplete="off" placeholder="请输入新密码" />
+            <el-form-item label="新しいパスワード" prop="newPassword">
+                <el-input show-password v-model="data.form.newPassword" autocomplete="off" placeholder="新しいパスワードを入力してください" />
             </el-form-item>
-            <el-form-item label="确认新密码" prop="confirmPassword" required>
-                <el-input show-password v-model="data.form.confirmPassword" autocomplete="off" placeholder="请再次确认新密码" />
+            <el-form-item label="新しいパスワードの確認" prop="confirmPassword" required>
+                <el-input show-password v-model="data.form.confirmPassword" autocomplete="off" placeholder="もう一度新しいパスワードを確認してください" />
             </el-form-item>
             <div style="text-align: center">
-                <el-button @click="updatePassword" type="primary" style="padding: 20px 30px">立即修改</el-button>
+                <el-button @click="updatePassword" type="primary" style="padding: 20px 30px">すぐに修正する</el-button>
             </div>
         </el-form>
     </div>
@@ -25,9 +25,9 @@ import { reactive, ref } from 'vue';
 
 const validatePass = (rule, value, callback) => {
     if (!value) {
-        callback(new Error('请再次确认新密码'))
+        callback(new Error('もう一度新しいパスワードを確認してください'))
     } else if (value !== data.form.newPassword) {
-        callback(new Error("两次输入的密码不一致"))
+        callback(new Error("入力した2回のパスワードが一致しません"))
     } else {
         callback()
     }
@@ -38,10 +38,10 @@ const data = reactive({
     form: {},
     rules: {
         password: [
-            { required: true, message: '请输入原密码', trigger: 'blur' }
+            { required: true, message: '旧パスワードを入力してください', trigger: 'blur' }
         ],
         newPassword: [
-            { required: true, message: '请输入新密码', trigger: 'blur' }
+            { required: true, message: '新しいパスワードを入力してください', trigger: 'blur' }
         ],
         confirmPassword: [
             { validator: validatePass, trigger: 'blur' }
@@ -56,7 +56,7 @@ const updatePassword = () => {
         if (valid) {
             request.put('/updatePassword', data.form).then(res => {
                 if (res.code === '200') {
-                    ElMessage.success('修改成功')
+                    ElMessage.success('変更が成功しました')
                     localStorage.removeItem('xm-pro-user')
                     setTimeout(() => {
                         location.href = '/login'

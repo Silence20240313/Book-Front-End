@@ -18,7 +18,7 @@ import request from '@/utils/request';
 
 const barOption = {
     title: {
-        text: '各部门员工数量'
+        text: '各部門の従業員数'
     },
     tooltip: {},
     legend: {
@@ -47,7 +47,7 @@ const barOption = {
 
 const lineOption = {
     title: {
-        text: '近7日发布文章的数量'
+        text: '過去7日間の通知数'
     },
     tooltip: {},
     legend: {
@@ -59,7 +59,7 @@ const lineOption = {
     yAxis: {},
     series: [
         {
-            name: '发布数量',
+            name: '公開数',
             type: 'line',
             data: [],
             smooth: true
@@ -69,7 +69,7 @@ const lineOption = {
 
 const pieOption = {
     title: {
-        text: '各部门员工数量比例图',
+        text: '各部門の従業員数の割合グラフ',
         left: 'center'
     },
     tooltip: {
@@ -81,7 +81,7 @@ const pieOption = {
     },
     series: [
         {
-            name: '员工数量',
+            name: '従業員数',
             type: 'pie',
             radius: '50%',
             data: [],

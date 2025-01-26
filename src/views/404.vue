@@ -1,9 +1,9 @@
 <template>
     <div>
-        非常抱歉，找不到页面了！
+        申し訳ございません、ページが見つかりませんでした！
     </div>
     <div>
-        <el-button type="primary" @click="goHome">返回主页</el-button>
+        <el-button type="primary" @click="goHome">ホームページに戻る</el-button>
     </div>
 </template>
 

@@ -4,25 +4,25 @@
       <div
         style="padding: 50px 30px;background-color: white;margin-left: 100px;border-radius: 5px;box-shadow: 0 0 10px rgba(0, 0, 0, 0.2)">
         <el-form ref="formRef" :rules="data.rules" :model="data.form" style="width: 300px">
-          <div style="margin-bottom: 30px;font-size: 24px;text-align: center; color:blue;font-weight:bold">欢迎登录后台管理系统
+          <div style="margin-bottom: 30px;font-size: 24px;text-align: center; color:blue;font-weight:bold">社員管理システム
           </div>
           <el-form-item prop="username">
-            <el-input size="large" v-model="data.form.username" placeholder="请输入账号" prefix-icon="User"></el-input>
+            <el-input size="large" v-model="data.form.username" placeholder="アカウントを入力してください" prefix-icon="User"></el-input>
           </el-form-item>
           <el-form-item prop="password">
-            <el-input show-password size="large" v-model="data.form.password" placeholder="请输入密码"
+            <el-input show-password size="large" v-model="data.form.password" placeholder="パスワードを入力してください"
               prefix-icon="Lock"></el-input>
           </el-form-item>
           <el-form-item prop="role">
             <el-select v-model="data.form.role" style="width: 100%" size="large">
-              <el-option value="ADMIN" label="管理员"></el-option>
-              <el-option value="EMP" label="员工"></el-option>
+              <el-option value="ADMIN" label="管理者"></el-option>
+              <el-option value="EMP" label="従業員"></el-option>
             </el-select>
           </el-form-item>
           <div style="margin-bottom: 20px">
-            <el-button @click="login" size="large" style="width: 100%;" type="primary">登录</el-button>
+            <el-button @click="login" size="large" style="width: 100%;" type="primary">ログイン</el-button>
           </div>
-          <div style="text-align: right">还没有账号?请<a style="color: #0742b1;text-decoration: none" href="/register">注册</a>
+          <div style="text-align: right">アカウント<a style="color: #0742b1;text-decoration: none" href="/register">新規登録</a>
           </div>
         </el-form>
       </div>
@@ -41,10 +41,10 @@ const data = reactive({
   form: {role:'ADMIN'},
   rules: {
     username: [
-      { Required: true, message: '请输入账号', trigger: 'blur' }
+      { Required: true, message: 'アカウントを入力してください', trigger: 'blur' }
     ],
     password: [
-      { Required: true, message: '请输入密码', trigger: 'blur' }
+      { Required: true, message: 'パスワードを入力してください', trigger: 'blur' }
     ]
   }
 })
@@ -60,7 +60,7 @@ const login = () => {
         if (res.code === '200') { // 登录成功
           // 存储后台返回的用户数据信息
           localStorage.setItem('xm-pro-user', JSON.stringify(res.data)) //把json对象转换为json字符串存储
-          ElMessage.success('登陆成功')
+          ElMessage.success('ログインしました')
           setTimeout(() => {
             location.href = '/manager/home'
           }, 500)

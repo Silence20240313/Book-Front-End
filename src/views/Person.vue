@@ -1,6 +1,6 @@
 <template>
   <div class="card" style="width: 50%;padding: 40px 20px">
-    <el-form ref="formRef" :rules="data.rules" :model="data.form" label-width="80px"
+    <el-form ref="formRef" :rules="data.rules" :model="data.form" label-width="120px"
       style="padding-right: 40px;padding-top: 20px">
       <div style="width: 100%;display: flex;justify-content: center;margin-bottom: 20px">
         <el-upload class="avatar-uploader" action="http://localhost:8080/files/upload" :show-file-list="false"
@@ -11,11 +11,11 @@
           </el-icon>
         </el-upload>
       </div>
-      <el-form-item label="账号" prop="username">
-        <el-input disabled v-model="data.form.username" autocomplete="off" placeholder="请输入账号" />
+      <el-form-item label="アカウント" prop="username" >
+        <el-input disabled v-model="data.form.username" autocomplete="off" placeholder="アカウントを入力してください" />
       </el-form-item>
       <el-form-item label="名称" prop="name">
-        <el-input v-model="data.form.name" autocomplete="off" placeholder="请输入名称" />
+        <el-input v-model="data.form.name" autocomplete="off" placeholder="名称を入力してください" />
       </el-form-item>
       <div v-if="data.user.role === 'EMP'">
         <el-form-item label="性别">
@@ -24,20 +24,20 @@
             <el-radio value="女" label="女"></el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="工号" prop="no">
-          <el-input disabled v-model="data.form.no" autocomplete="off" placeholder="请输入工号" />
+        <el-form-item label="社員番号" prop="no">
+          <el-input disabled v-model="data.form.no" autocomplete="off" placeholder="社員番号を入力してください" />
         </el-form-item>
-        <el-form-item label="年龄">
+        <el-form-item label="年齢">
           <el-input-number style="width: 180px" :min="18" v-model="data.form.age" autocomplete="off"
-            placeholder="请输入年龄" />
+            placeholder="年齢を入力してください" />
         </el-form-item>
-        <el-form-item label="个人介绍">
+        <el-form-item label="自己紹介">
           <el-input :rows="3" type="textarea" style="width: 180px" :min="18" v-model="data.form.description"
-            autocomplete="off" placeholder="请输入个人介绍" />
+            autocomplete="off" placeholder="自己紹介を入力してください" />
         </el-form-item>
       </div>
       <div style="text-align: center">
-        <el-button @click="updateUser" type="primary" style="padding: 20px 30px">更新个人信息</el-button>
+        <el-button @click="updateUser" type="primary" style="padding: 20px 30px">個人情報を更新</el-button>
       </div>
     </el-form>
   </div>
@@ -54,13 +54,13 @@ const data = reactive({
   form: {},
   rules: {
     username: [
-      { required: true, message: '请输入账号', trigger: 'blur' }
+      { required: true, message: 'アカウントを入力してください', trigger: 'blur' }
     ],
     name: [
-      { required: true, message: '请输入名称', trigger: 'blur' }
+      { required: true, message: '名称を入力してください', trigger: 'blur' }
     ],
     no: [
-      { required: true, message: '请输入工号', trigger: 'blur' }
+      { required: true, message: '社員番号を入力してください', trigger: 'blur' }
     ]
   }
 })
@@ -83,7 +83,7 @@ const updateUser = () => {
   if (data.user.role === 'EMP') {
     request.put('/employee/update', data.form).then(res => {
       if (res.code === '200') {
-        ElMessage.success('更新成功')
+        ElMessage.success('更新が成功しました')
         // 更新缓存数据
         localStorage.setItem('xm-pro-user', JSON.stringify(data.form))
         // chu'fa
@@ -95,7 +95,7 @@ const updateUser = () => {
   } else {
     request.put('/admin/update', data.form).then(res => {
       if (res.code === '200') {
-        ElMessage.success('更新成功')
+        ElMessage.success('更新が成功しました')
         // 更新缓存数据
         localStorage.setItem('xm-pro-user', JSON.stringify(data.form))
         // chu'fa

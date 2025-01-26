@@ -1,32 +1,32 @@
 <template>
   <div>
     <div class="card" style="margin-bottom: 5px">
-      <el-input style="width: 240px;margin-right: 10px" v-model="data.title" placeholder="请输入标题查询"
+      <el-input style="width: 240px;margin-right: 10px" v-model="data.title" placeholder="タイトルを入力して検索してください"
         prefix-icon="Search"></el-input>
-      <el-button type="primary" @click="load">查询</el-button>
-      <el-button type="warning" @click="reset">重置</el-button>
+      <el-button type="primary" @click="load">検索</el-button>
+      <el-button type="warning" @click="reset">リセット</el-button>
     </div>
     <div class="card" style="margin-bottom: 5px">
-      <el-button type="primary" @click="handleAdd">新增</el-button>
-      <el-button type="danger" @click="delBatch">批量删除</el-button>
+      <el-button type="primary" @click="handleAdd">新規追加</el-button>
+      <el-button type="danger" @click="delBatch">一括削除</el-button>
     </div>
     <div class="card" style="margin-bottom: 5px">
       <el-table :data="data.tableData" stripe @selection-change="handleSelectionChange">
         <el-table-column type="selection" width="55" />
-        <el-table-column label="标题" prop="title" />
-        <el-table-column label="封面">
+        <el-table-column label="タイトル" prop="title" />
+        <el-table-column label="表紙">
           <template #default="scope">
             <el-image v-if="scope.row.img" :src="scope.row.img" :preview-src-list=[scope.row.img] preview-teleported
               style="display: block;width: 40px;height: 40px" />
           </template>
         </el-table-column>
-        <el-table-column label="简介" prop="description" show-overflow-tooltip />
+        <el-table-column label="概要" prop="description" show-overflow-tooltip />
         <el-table-column label="内容">
           <template #default="scope">
-            <el-button type="primary" @click="view(scope.row.content)">查看内容</el-button>
+            <el-button type="primary" @click="view(scope.row.content)">内容を見る</el-button>
           </template>
         </el-table-column>
-        <el-table-column label="发布时间" prop="time" />
+        <el-table-column label="公開日時" prop="time" />
         <el-table-column label="操作" width="120">
           <template #default="scope">
             <el-button @click="handleUpdate(scope.row)" type="primary" :icon="Edit" circle></el-button>
@@ -40,19 +40,19 @@
           layout="total, sizes, prev, pager, next, jumper" :total="data.total" />
       </div>
     </div>
-    <el-dialog title="文章信息" v-model="data.formVisible" width="50%" destroy-on-close>
+    <el-dialog title="記事情報" v-model="data.formVisible" width="50%" destroy-on-close>
       <el-form ref="formRef" :model="data.form" label-width="80px" style="padding-right: 40px;padding-top: 20px">
-        <el-form-item label="标题" prop="title">
-          <el-input v-model="data.form.title" autocomplete="off" placeholder="请输入标题" />
+        <el-form-item label="タイトル" prop="title">
+          <el-input v-model="data.form.title" autocomplete="off" placeholder="タイトルを入力してください" />
         </el-form-item>
-        <el-form-item label="封面">
+        <el-form-item label="表紙">
           <el-upload action="http://localhost:8080/files/upload" list-type="picture"
             :on-success="handleImgAvatarSuccess">
-            <el-button type="primary">上传封面</el-button>
+            <el-button type="primary">カバーをアップロードしてください</el-button>
           </el-upload>
         </el-form-item>
-        <el-form-item label="简介" prop="description">
-          <el-input type="textarea" :rows="3" v-model="data.form.description" autocomplete="off" placeholder="请输入简介" />
+        <el-form-item label="概要" prop="description">
+          <el-input type="textarea" :rows="3" v-model="data.form.description" autocomplete="off" placeholder="概要を入力してください" />
         </el-form-item>
         <el-form-item label="内容">
           <div style="border: 1px solid #ccc; width: 100%">
@@ -64,7 +64,7 @@
       </el-form>
       <template #footer>
         <div class="dialog-footer">
-          <el-button @click="data.formVisible = false">取消</el-button>
+          <el-button @click="data.formVisible = false">キャンセル</el-button>
           <el-button type="primary" @click="save">保存</el-button>
         </div>
       </template>
@@ -73,7 +73,7 @@
       <div class="editor-content-view" style="padding: 20px" v-html="data.content"></div>
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="data.viewVisible = false">关 闭</el-button>
+          <el-button @click="data.viewVisible = false">閉じる</el-button>
         </span>
       </template>
     </el-dialog>
@@ -135,7 +135,7 @@ const load = () => {
     params: {
       pageNum: data.pageNum,
       pageSize: data.pageSize,
-      name: data.name
+      title: data.title
     }
   }).then(res => {
     data.tableData = res.data.list
@@ -149,7 +149,7 @@ const handleImgAvatarSuccess = (res) => {
 }
 
 const reset = () => {
-  data.name = null
+  data.title = null
   load()
 }
 
@@ -166,7 +166,7 @@ const add = () => {
   request.post('/article/add', data.form).then(res => { // 新增的对象里面没有Id
     if (res.code === '200') {
       data.formVisible = false
-      ElMessage.success('操作成功')
+      ElMessage.success('操作が成功しました')
       load() // 新增后一定要重新加载最新的数据
     } else {
       ElMessage.error(res.msg)
@@ -178,7 +178,7 @@ const update = () => {
   request.put('/article/update', data.form).then(res => { // 编辑的对象里面包含Id
     if (res.code === '200') {
       data.formVisible = false
-      ElMessage.success('操作成功')
+      ElMessage.success('操作が成功しました')
       load() // 更新后一定要重新加载最新的数据
     } else {
       ElMessage.error(res.msg)
@@ -192,10 +192,10 @@ const handleUpdate = (row) => {
 }
 
 const del = (id) => {
-  ElMessageBox.confirm('删除数据后无法恢复，确认要删除吗？', '删除确认', { type: 'warning' }).then(() => {
+  ElMessageBox.confirm('データを削除すると復元できません。本当に削除しますか？', '削除の確認', { type: 'warning' }).then(() => {
     request.delete('article/deleteById/' + id).then(res => {
       if (res.code === '200') {
-        ElMessage.success('操作成功')
+        ElMessage.success('操作が成功しました')
         load() //删除后一定要重新加载最新的数据
       } else {
         ElMessage.error(res.msg)
@@ -212,13 +212,13 @@ const handleSelectionChange = (rows) => { //返回所有选中的行对象数组
 }
 const delBatch = () => {
   if (data.ids.length === 0) {
-    ElMessage.warning('请选择数据')
+    ElMessage.warning('データを選択してください')
     return
   }
-  ElMessageBox.confirm('删除数据后无法恢复，确认要删除吗？', '删除确认', { type: 'warning' }).then(() => {
+  ElMessageBox.confirm('データを削除すると復元できません。本当に削除しますか？', '削除の確認', { type: 'warning' }).then(() => {
     request.delete('/article/deleteBatch', { data: data.ids }).then(res => {
       if (res.code === '200') {
-        ElMessage.success('操作成功')
+        ElMessage.success('操作が成功しました')
         load()
       } else {
         ElMessage.error(res.msg)

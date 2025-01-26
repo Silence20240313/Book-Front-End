@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="card" style="margin-bottom: 5px">
-      <el-input style="width: 240px;margin-right: 10px" v-model="data.name" placeholder="请输入名称查询"
+      <el-input style="width: 240px;margin-right: 10px" v-model="data.name" placeholder="名称を入力して検索してください"
         prefix-icon="Search"></el-input>
-      <el-button type="primary" @click="load">查询</el-button>
-      <el-button type="warning" @click="reset">重置</el-button>
+      <el-button type="primary" @click="load">検索</el-button>
+      <el-button type="warning" @click="reset">リセット</el-button>
     </div>
     <div class="card" style="margin-bottom: 5px">
-      <el-button type="primary" @click="handleAdd">新增</el-button>
-      <el-button type="danger" @click="delBatch">批量删除</el-button>
+      <el-button type="primary" @click="handleAdd">新規追加</el-button>
+      <el-button type="danger" @click="delBatch">一括削除</el-button>
     </div>
     <div class="card" style="margin-bottom: 5px">
       <el-table :data="data.tableData" stripe @selection-change="handleSelectionChange">
@@ -27,16 +27,16 @@
           layout="total, sizes, prev, pager, next, jumper" :total="data.total" />
       </div>
     </div>
-    <el-dialog title="部门信息" v-model="data.formVisible" width="500" destroy-on-close>
+    <el-dialog title="部門情報" v-model="data.formVisible" width="500" destroy-on-close>
       <el-form ref="formRef" :rules="data.rules" :model="data.form" label-width="80px"
         style="padding-right: 40px;padding-top: 20px">
         <el-form-item label="名称" prop="name">
-          <el-input v-model="data.form.name" autocomplete="off" placeholder="请输入名称" />
+          <el-input v-model="data.form.name" autocomplete="off" placeholder="名称を入力してください" />
         </el-form-item>
       </el-form>
       <template #footer>
         <div class="dialog-footer">
-          <el-button @click="data.formVisible = false">取消</el-button>
+          <el-button @click="data.formVisible = false">キャンセル</el-button>
           <el-button type="primary" @click="save">保存</el-button>
         </div>
       </template>
@@ -61,7 +61,7 @@ const data = reactive({
   ids: [],
   rules: {
     name: [
-      { required: true, message: '请输入名称', trigger: 'blur' }
+      { required: true, message: '名称を入力してください', trigger: 'blur' }
     ],
   }
 })
@@ -104,7 +104,7 @@ const add = () => {
   request.post('/dept/add', data.form).then(res => { // 新增的对象里面没有Id
     if (res.code === '200') {
       data.formVisible = false
-      ElMessage.success('操作成功')
+      ElMessage.success('操作が成功しました')
       load() // 新增后一定要重新加载最新的数据
     } else {
       ElMessage.error(res.msg)
@@ -116,7 +116,7 @@ const update = () => {
   request.put('/dept/update', data.form).then(res => { // 编辑的对象里面包含Id
     if (res.code === '200') {
       data.formVisible = false
-      ElMessage.success('操作成功')
+      ElMessage.success('操作が成功しました')
       load() // 更新后一定要重新加载最新的数据
     } else {
       ElMessage.error(res.msg)
@@ -130,10 +130,10 @@ const handleUpdate = (row) => {
 }
 
 const del = (id) => {
-  ElMessageBox.confirm('删除数据后无法恢复，确认要删除吗？', '删除确认', { type: 'warning' }).then(() => {
+  ElMessageBox.confirm('データを削除すると復元できません。本当に削除しますか？', '削除の確認', { type: 'warning' }).then(() => {
     request.delete('dept/deleteById/' + id).then(res => {
       if (res.code === '200') {
-        ElMessage.success('操作成功')
+        ElMessage.success('操作が成功しました')
         load() //删除后一定要重新加载最新的数据
       } else {
         ElMessage.error(res.msg)
@@ -150,13 +150,13 @@ const handleSelectionChange = (rows) => { //返回所有选中的行对象数组
 }
 const delBatch = () => {
   if (data.ids.length === 0) {
-    ElMessage.warning('请选择数据')
+    ElMessage.warning('データを選択してください')
     return
   }
-  ElMessageBox.confirm('删除数据后无法恢复，确认要删除吗？', '删除确认', { type: 'warning' }).then(() => {
+  ElMessageBox.confirm('データを削除すると復元できません。本当に削除しますか？', '削除の確認', { type: 'warning' }).then(() => {
     request.delete('/dept/deleteBatch', { data: data.ids }).then(res => {
       if (res.code === '200') {
-        ElMessage.success('操作成功')
+        ElMessage.success('操作が成功しました')
         load()
       } else {
         ElMessage.error(res.msg)

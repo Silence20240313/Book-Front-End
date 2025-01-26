@@ -1,10 +1,10 @@
 <template>
     <div>
-        <el-button @click="select" type="primary">查询</el-button>
+        <el-button @click="select" type="primary">検索</el-button>
         <el-table :data="data.tableData" style="width: 100%">
-            <el-table-column prop="name" label="姓名" width="180" />
-            <el-table-column prop="age" label="年龄" width="180" />
-            <el-table-column prop="job" label="职业" />
+            <el-table-column prop="name" label="名前" width="180" />
+            <el-table-column prop="age" label="年齢" width="180" />
+            <el-table-column prop="job" label="職業" />
         </el-table>
     </div>
 </template>

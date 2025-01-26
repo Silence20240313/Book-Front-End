@@ -1,32 +1,32 @@
 <template>
   <div class="container">
     <div class="card">
-      <h1>后台管理系统</h1>
-      <p>这是一个功能丰富的后台管理系统，旨在帮助企业管理员高效管理用户、员工和部门信息。系统具备以下主要功能：</p>
+      <h1>社員管理システム</h1>
+      <p>これは機能豊富な社員管理システムで、企業の管理者がユーザー、従業員、部門情報を効率的に管理できるように設計されています。システムの主な機能は以下の通りです：</p>
     </div>
 
     <div class="card">
-      <h2>主要功能</h2>
+      <h2>主な機能</h2>
       <ul>
-        <li><span class="feature-icon">👤</span><strong>用户管理：</strong> 支持用户的注册、登录、权限管理（普通员工和管理员）。</li>
-        <li><span class="feature-icon">🔑</span><strong>密码管理：</strong> 用户可修改密码，管理员可管理所有用户的账户信息。</li>
-        <li><span class="feature-icon">📝</span><strong>文章管理：</strong> 提供文章的增、删、改、查功能，方便管理员对内容进行管理。</li>
-        <li><span class="feature-icon">👥</span><strong>员工与部门管理：</strong> 支持员工信息的管理，并可增、删、改、查部门信息。</li>
-        <li><span class="feature-icon">📊</span><strong>数据管理：</strong> 包含图表功能，实时展示近7天内发布的文章数量和各部门员工人数，帮助管理员快速了解系统运营情况。</li>
+        <li><span class="feature-icon">👤</span><strong>ユーザー管理：</strong> ユーザーの登録、ログイン、権限管理（一般従業員と管理者）をサポートします。</li>
+        <li><span class="feature-icon">🔑</span><strong>パスワード管理：</strong> ユーザーはパスワードを変更でき、管理者はすべてのユーザーのアカウント情報を管理できます。</li>
+        <li><span class="feature-icon">📝</span><strong>通知管理：</strong> 通知の追加、削除、編集、検索機能を提供し、管理者がコンテンツを管理しやすくします。</li>
+        <li><span class="feature-icon">👥</span><strong>従業員と部門の管理：</strong> 従業員情報の管理をサポートし、部門情報の追加、削除、編集、検索が可能です。</li>
+        <li><span class="feature-icon">📊</span><strong>データ管理：</strong> グラフ機能があり、過去7日間に公開された通知や各部門の従業員数をリアルタイムで表示し、管理者がシステムの運営状況を迅速に把握できるようにします。</li>
       </ul>
     </div>
 
     <div class="card">
-      <h2>系统特点</h2>
+      <h2>システムの特徴</h2>
       <ul>
-        <li><strong>易操作：</strong> 简单的操作界面，轻松上手。</li>
-        <li><strong>数据可视化：</strong> 内置图表，实时展示数据，便于决策分析。</li>
-        <li><strong>安全性高：</strong> 严格的用户权限控制，保障数据安全。</li>
+        <li><strong>操作が簡単：</strong> シンプルな操作インターフェースで、簡単に使用できます。</li>
+        <li><strong>データ可視化：</strong> 内蔵されたグラフで、リアルタイムでデータを表示し、意思決定をサポートします。</li>
+        <li><strong>高いセキュリティ：</strong> 厳格なユーザー権限管理により、データの安全性が確保されます。</li>
       </ul>
     </div>
 
     <div class="card">
-      <p>本系统注重操作简便与数据可视化，致力于为企业提供更高效的管理体验。</p>
+      <p>本システムは、操作の簡便さとデータ可視化に重点を置き、企業にとってより効率的な管理体験を提供することを目指しています。</p>
     </div>
   </div>
 </template>
